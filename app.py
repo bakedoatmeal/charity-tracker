@@ -1,4 +1,9 @@
 from flask import Flask, render_template
+from pymongo import MongoClient
+
+client = MongoClient()
+db = client.Donations
+charities = db.charities
 
 app = Flask(__name__)
 
@@ -6,12 +11,7 @@ app = Flask(__name__)
 def index():
     """Return homepage"""
     msg = "hello!"
-    return render_template('home.html', msg = msg)
-
-charities = [
-    {'name': 'Moisson Montreal', 'description': 'Food bank', 'projects': []},
-     {'name': 'NDG Food depot', 'description': 'Food bank', 'projects': []},
-]
+    return render_template('charities_index.html', charities=charities.find())
 
 @app.route('/charities')
 def charities_index():
