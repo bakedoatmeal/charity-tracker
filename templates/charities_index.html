@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Charities</h1>
+    {% for charity in charities %}
+        <h2>{{ charity.name }}</h2>
+        <small>{{ charity.description }}</small>
+    {% endfor %}
+{% endblock %}
