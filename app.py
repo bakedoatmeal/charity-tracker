@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from pymongo import MongoClient
 from flask import Flask, render_template, request, redirect, url_for
+from  bson.objectid import ObjectId
 
 client = MongoClient()
 db = client.Donations
@@ -31,6 +32,12 @@ def users_submit():
     }
     users.insert_one(user)
     return redirect(url_for('users_index'))
+
+@app.route('/users/<user_id>')
+def users_show(user_id):
+    """Show a single user's information."""
+    user = users.find_one({'_id': ObjectId(user_id)})
+    return render_template('users_show.html', user = user)
 
 if __name__ == '__main__':
     app.run(debug=True)
