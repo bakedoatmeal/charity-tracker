@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method='POST' action='/users'>
+    <fieldset>
+    <legend>New User</legend>
+    <!-- TITLE -->
+    <p>
+        <label for='username'>Username</label><br>
+        <input type='text' name='username' />
+    </p>
+    <p>
+        <label for='fullname'>Full Name</label><br>
+        <input type='text' name='fullname' />
+    </p>
+    </fieldset>
+
+    <!-- BUTTON -->
+    <p>
+        <button type='submit'>Save User Information</button>
+    </p>
+</form>
+{% endblock %}
