@@ -10,4 +10,12 @@
         <button type='submit'>Delete</button>
     </form>
 </p>
+
+<ul>
+    {% for donation in donations %}
+        {% include 'partials/donation.html' %}
+    {% endfor %}
+</ul>
+
+{% include 'partials/donation_form.html' %}
 {% endblock %}

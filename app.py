@@ -6,6 +6,7 @@ from  bson.objectid import ObjectId
 client = MongoClient()
 db = client.Donations
 users = db.users
+donations = db.donations
 
 app = Flask(__name__)
 
@@ -37,7 +38,8 @@ def users_submit():
 def users_show(user_id):
     """Show a single user's information."""
     user = users.find_one({'_id': ObjectId(user_id)})
-    return render_template('users_show.html', user = user)
+    user_donations = donations.find({'user_id': ObjectId(user_id)})
+    return render_template('users_show.html', user = user, donations=user_donations)
 
 #TODO: Add update route for Users
 #TODO: Also, can make sub templates for html files
@@ -46,6 +48,19 @@ def users_show(user_id):
 def users_delete(user_id):
     users.delete_one({'_id': ObjectId(user_id)})
     return redirect(url_for('users_index'))
+
+@app.route('/users/donations', methods=['POST'])
+def donations_new():
+    """Submit a new donation"""
+    donation = {
+        'charity': request.form.get('charity'),
+        'amount': request.form.get('amount'),
+        'date': request.form.get('date'), 
+        'user_id': ObjectId(request.form.get('user_id'))
+    }
+    donations.insert_one(donation)
+    # return redirect(url_for('users_show', user_id=request.form.get('user_id')))
+    return redirect(url_for('users_show', user_id=request.form.get('user_id')))
 
 if __name__ == '__main__':
     app.run(debug=True)
