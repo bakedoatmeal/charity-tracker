@@ -39,5 +39,13 @@ def users_show(user_id):
     user = users.find_one({'_id': ObjectId(user_id)})
     return render_template('users_show.html', user = user)
 
+#TODO: Add update route for Users
+#TODO: Also, can make sub templates for html files
+
+@app.route('/users/<user_id>/delete', methods=['POST'])
+def users_delete(user_id):
+    users.delete_one({'_id': ObjectId(user_id)})
+    return redirect(url_for('users_index'))
+
 if __name__ == '__main__':
     app.run(debug=True)

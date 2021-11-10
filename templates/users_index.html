@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Users</h1>
+    <h1>Donators' Profiles</h1>
 
-    <a href='/users/new'>Add User Information</a>
+    <p>Don't see your information? <a href='/users/new'>Sign Up Here</a></p>
 
     {% for user in users %}
         <h2><a href='/users/{{ user._id }}'>{{ user.username }}</a></h2>
