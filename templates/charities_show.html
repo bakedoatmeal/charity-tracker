@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<a href='/'>Back to Home</a>
+<h1>{{ charity.name }}</h1>
+
+<section>
+    <h2>Rating</h2>
+    <p>{{charity.rating * '*'}}</p>
+    <h2>Description</h2>
+    <p>{{ charity.description }}</p>
+</section>
+
+<section>
+    <h2>Projects</h2>
+    {% for project in charity.projects %}
+        <p>Project info here </p>
+    {% endfor %}
+</section>
+
+<p>
+    <form method='POST' action=''>
+        <button type='submit'>Delete</button>
+    </form>
+</p>
+
+{% endblock %}

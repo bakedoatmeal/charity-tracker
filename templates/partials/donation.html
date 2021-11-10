@@ -2,4 +2,8 @@
     <p>{{ donation.charity }}</p>
     <span>{{ donation.amount }}</span>
     <span>{{ donation.date }}</span>
+    <p><form method='POST' action='/users/donations/{{ donation._id }}'>
+        <input type='hidden' value='{{ user._id }}' name='user_id'/>
+        <button class='btn btn-primary' type='submit'>Delete</button>
+    </form></p>
 </li>

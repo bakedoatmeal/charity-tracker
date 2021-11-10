@@ -10,4 +10,10 @@
         <small>{{ user.fullname }}</small>
     {% endfor %}
 
+
+    <h1>Browse Charities </h1>
+    {% for charity in charities %}
+        <p><a href='/charities/{{charity._id}}'>{{charity.name}}</a> {{charity.rating * '*'}}</p>
+    {% endfor %}
+
 {% endblock %}
