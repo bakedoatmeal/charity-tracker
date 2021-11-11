@@ -1,5 +1,10 @@
 <li>
-    <p>{{ donation.charity }}</p>
+    <p>{% for charity in charities %}
+            {% if charity.name == donation.charity %}
+                <a href='/charities/charity._id'> HERE FOR MORE INFO</a>
+            {% endif %}
+        {% endfor %}
+        {{ donation.charity }}</p>
     <span>{{ donation.amount }}</span>
     <span>{{ donation.date }}</span>
     <p><form method='POST' action='/users/donations/{{ donation._id }}'>

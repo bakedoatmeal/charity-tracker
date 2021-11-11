@@ -40,6 +40,15 @@ def users_show(user_id):
     """Show a single user's information."""
     user = users.find_one({'_id': ObjectId(user_id)})
     user_donations = donations.find({'user_id': ObjectId(user_id)})
+    # TODO: Fix donation total aggregate
+    # total_donations = donations.aggregate([{"$match": {'user_id': ObjectId(user_id)}},{
+    #     "$group": { "_id":0, "total_amount": {"$sum": "$amount"}
+    #     }
+    #     }])
+    # for donation in total_donations: 
+    #     print(donation)
+
+    
     return render_template('users_show.html', user = user, donations=user_donations, charities=charities)
 
 #TODO: Add update route for Users
@@ -74,3 +83,7 @@ def charities_show(charity_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+# TODO: Relate charities to donations 
+# TODO: CRUD Charities? 
+# TODO: Figure out UX path
