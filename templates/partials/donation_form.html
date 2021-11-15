@@ -1,15 +1,18 @@
 <form action='/users/donations' method='POST'>
     <input type='hidden' value='{{ user._id }}' name='user_id'>
+    <input type='hidden' value='{{ user.username}}' name='username'>
     <fieldset>
         <legend>Log a Donation</legend>
         <!-- TITLE -->
         <div class='form-group'>
             <label for='charity-name'>Charity</label><br>
-            <input class='form-control'
-                id='charity-name'
-                type='text'
-                name='charity'
-                placeholder='Charity Name'/>
+            <select class='form-control'
+                id ='charity-name'
+                name = 'charity'>   
+                {% for charity in charities %}
+                    <option value="{{charity._id}}">{{charity.name}}</option>
+                {% endfor %}
+            </select>
         </div>
 
         <!-- DESCRIPTION -->

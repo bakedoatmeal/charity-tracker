@@ -13,7 +13,7 @@
 
     <h1>Browse Charities </h1>
     {% for charity in charities %}
-        <p><a href='/charities/{{charity._id}}'>{{charity.name}}</a> {{charity.rating * '*'}}</p>
+        <p><a href='/charities/{{charity._id}}'>{{charity.name}}</a> {{charity.rating}}</p>
     {% endfor %}
 
 {% endblock %}

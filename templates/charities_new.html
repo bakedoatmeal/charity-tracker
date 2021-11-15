@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method='POST' action='/charities'>
+    <fieldset>
+        <legend>New Charity</legend>
+        <!-- TITLE -->
+        <p>
+            <label for='name'>Charity Name</label><br>
+            <input type='text' name='name' />
+        </p>
+        <p>
+            <label for='rating'>Rating</label><br>
+            <select name='rating'>
+                <option value='five'>Five Stars</option>
+                <option value='four'>Four Stars</option>
+                <option value='three'>Three Stars</option>
+                <option value='two'>Two Stars</option>
+                <option value='one'>One Stars</option>
+            </select>
+        </p>
+        <p>
+            <label for='description'>Description</label>
+            <textarea type='text' name='description' class='form-control'></textarea>
+        </p>
+    </fieldset>
+
+    <!-- BUTTON -->
+    <p>
+        <button type='submit'>Save Charity Information</button>
+    </p>
+</form>
+{% endblock %}

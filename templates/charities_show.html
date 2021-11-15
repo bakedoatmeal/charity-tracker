@@ -6,22 +6,29 @@
 
 <section>
     <h2>Rating</h2>
-    <p>{{charity.rating * '*'}}</p>
+   <p>{{charity.rating}} stars</p> 
     <h2>Description</h2>
     <p>{{ charity.description }}</p>
 </section>
 
 <section>
     <h2>Projects</h2>
-    {% for project in charity.projects %}
-        <p>Project info here </p>
-    {% endfor %}
+    
 </section>
 
 <p>
-    <form method='POST' action=''>
-        <button type='submit'>Delete</button>
+    <form method='POST' action='/charities/{{charity._id}}/delete'>
+        <button type='submit'>Delete Charity</button>
     </form>
 </p>
+
+<p><a href='/charities/{{charity._id}}/edit'>Edit</a></p>
+
+<h2>Donations Received for {{charity.name}}</h2>
+<ul>
+    {% for donation in donations %}
+        {% include 'partials/donation2.html' %}
+    {% endfor %}
+</ul>
 
 {% endblock %}

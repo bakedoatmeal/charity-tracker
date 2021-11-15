@@ -7,10 +7,11 @@ client = MongoClient()
 db = client.Donations
 users = db.users
 donations = db.donations
+charities = db.charities
 
 app = Flask(__name__)
 
-charities = [
+charitiesTest = [
     { 'name': 'SPCA', 'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'rating': 3, 'projects': [{}, {}], '_id': 1}, 
     { 'name': 'Moisson Montreal', 'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'rating': 4, 'projects': [{}, {}], '_id': 2},
     { 'name': 'World Wildlife Fund', 'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'rating': 5, 'projects': [{}, {}], '_id': 3}
@@ -19,11 +20,15 @@ charities = [
 @app.route('/')
 def index():
     """Return homepage"""
-    return render_template('users_index.html', users=users.find(), charities=charities)
+    return render_template('users_index.html', users=users.find(), charities=charities.find())
 
 @app.route('/users/new')
 def users_new():
     return render_template('users_new.html')
+
+@app.route('/charities/new')
+def charities_new():
+    return render_template('charities_new.html')
 
 @app.route('/users', methods=['POST'])
 def users_submit():
@@ -33,7 +38,19 @@ def users_submit():
         'fullname': request.form.get('fullname')
     }
     users.insert_one(user)
-    return redirect(url_for('users_index'))
+    return redirect(url_for('index'))
+
+@app.route('/charities', methods=['POST'])
+def charities_submit():
+    """Insert a new charity"""
+    charity = {
+        'name': request.form.get('name'),
+        'rating': request.form.get('rating'),
+        'description': request.form.get('description'),
+        'projects': []
+    }
+    charities.insert_one(charity)
+    return redirect(url_for('index'))
 
 @app.route('/users/<user_id>')
 def users_show(user_id):
@@ -46,27 +63,56 @@ def users_show(user_id):
     #     }
     #     }])
     # for donation in total_donations: 
-    #     print(donation)
+    #     print(donation)    
+    return render_template('users_show.html', user = user, donations=user_donations, charities=list(charities.find()))
 
-    
-    return render_template('users_show.html', user = user, donations=user_donations, charities=charities)
+@app.route('/charities/<charity_id>')
+def charities_show(charity_id):
+    charity = charities.find_one({'_id': ObjectId(charity_id)})
+    charity_donations = donations.find({'charity': ObjectId(charity_id)})
+    return render_template('charities_show.html', charity = charity, donations=charity_donations)
 
 #TODO: Add update route for Users
 #TODO: Also, can make sub templates for html files
 
+@app.route('/charities/<charity_id>/edit')
+def charities_edit(charity_id):
+    charity = charities.find_one({'_id': ObjectId(charity_id)})
+    return render_template('charities_edit.html', charity = charity)
+
+@app.route('/charities/<charity_id>', methods=['POST'])
+def charities_update(charity_id):
+    updated_charity = {
+        'name': request.form.get('name'),
+        'rating': request.form.get('rating'),
+        'description': request.form.get('description'),
+        'projects': []
+    }
+    charities.update_one(
+        {'_id': ObjectId(charity_id)}, 
+        {'$set': updated_charity}
+    )
+    return redirect(url_for('charities_show', charity_id=charity_id ))
+
 @app.route('/users/<user_id>/delete', methods=['POST'])
 def users_delete(user_id):
     users.delete_one({'_id': ObjectId(user_id)})
-    return redirect(url_for('users_index'))
+    return redirect(url_for('index'))
+
+@app.route('/charities/<charity_id>/delete', methods=['POST'])
+def charities_delete(charity_id):
+    charities.delete_one({'_id': ObjectId(charity_id)})
+    return redirect(url_for('index'))
 
 @app.route('/users/donations', methods=['POST'])
 def donations_new():
     """Submit a new donation"""
     donation = {
-        'charity': request.form.get('charity'),
+        'charity': ObjectId(request.form.get('charity')),
         'amount': request.form.get('amount'),
         'date': request.form.get('date'), 
-        'user_id': ObjectId(request.form.get('user_id'))
+        'user_id': ObjectId(request.form.get('user_id')),
+        'username': request.form.get('username')
     }
     donations.insert_one(donation)
     # return redirect(url_for('users_show', user_id=request.form.get('user_id')))
@@ -77,9 +123,6 @@ def donations_delete(donation_id):
     donations.delete_one({'_id': ObjectId(donation_id)})
     return redirect(url_for('users_show', user_id=request.form.get('user_id')))
 
-@app.route('/charities/<charity_id>')
-def charities_show(charity_id):
-    return render_template('charities_show.html', charity = charities[0])
 
 if __name__ == '__main__':
     app.run(debug=True)
