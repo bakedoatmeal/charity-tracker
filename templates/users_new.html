@@ -3,21 +3,21 @@
 {% block content %}
 <form method='POST' action='/users'>
     <fieldset>
-    <legend>New User</legend>
+    <legend class="mt-4 mb-4">New User</legend>
     <!-- TITLE -->
     <p>
         <label for='username'>Username</label><br>
-        <input type='text' name='username' />
+        <input type='text' name='username' class="form-control"/>
     </p>
     <p>
         <label for='fullname'>Full Name</label><br>
-        <input type='text' name='fullname' />
+        <input type='text' name='fullname' class="form-control"/>
     </p>
     </fieldset>
 
     <!-- BUTTON -->
     <p>
-        <button type='submit'>Save User Information</button>
+        <button class="btn btn-primary" type='submit'>Save User Information</button>
     </p>
 </form>
 {% endblock %}

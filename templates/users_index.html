@@ -1,19 +1,34 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Donators' Profiles</h1>
+    <h1 class="mb-4 mt-4">Donators' Profiles</h1>
 
     <p>Don't see your information? <a href='/users/new'>Sign Up Here</a></p>
 
+    <div class='row'>
     {% for user in users %}
-        <h2><a href='/users/{{ user._id }}'>{{ user.username }}</a></h2>
-        <small>{{ user.fullname }}</small>
+        <div class="card mb-4 mr-4 text-white bg-primary" style="max-width: 20rem;">
+            <h2 class="card-header"><a href='/users/{{ user._id }}' style="color:white;">{{ user.username }}</a></h2>
+            <div class="card-body">{{ user.fullname }}</div>
+        </div>
     {% endfor %}
+    </div>
 
+    <h1 class="mb-4 mt-4">Browse Charities </h1>
 
-    <h1>Browse Charities </h1>
+    <div class="row">
+
     {% for charity in charities %}
-        <p><a href='/charities/{{charity._id}}'>{{charity.name}}</a> {{charity.rating}}</p>
+        
+        <div class="card border-dark mb-4 mr-4" style="max-width: 20rem;">
+            <h2 class='card-header'><a href='/charities/{{charity._id}}' style="color:white;">{{charity.name}}</a></h2>
+            <div class="card-body">
+                <p class="card-text">
+                        {{charity.description}}
+                </p>
+            </div>
+        </div>
     {% endfor %}
+    </div>
 
 {% endblock %}

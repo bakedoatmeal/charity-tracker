@@ -8,15 +8,21 @@
 
 <p>
     <form method='POST' action='/users/{{ user._id }}/delete'>
-        <button type='submit'>Delete User</button>
+        <button class='btn btn-primary' type='submit'>Delete User</button>
     </form>
 </p>
 
-<ul>
+
+<div>
+    <div class='row mb-3 mt-4'>
+        <div class='col-4'>Charity Name</div>
+        <div class='col-3'>Donation Amount</div>
+        <div class='col-3'>Date</div>
+    </div>
     {% for donation in donations %}
         {% include 'partials/donation.html' %}
     {% endfor %}
-</ul>
+</div>
 
 {% for donation in donations %}
 <h1> hi</h1>

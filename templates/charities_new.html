@@ -3,15 +3,15 @@
 {% block content %}
 <form method='POST' action='/charities'>
     <fieldset>
-        <legend>New Charity</legend>
+        <legend class="mt-4 mb-4">New Charity</legend>
         <!-- TITLE -->
         <p>
             <label for='name'>Charity Name</label><br>
-            <input type='text' name='name' />
+            <input type='text' name='name' class="form-control"/>
         </p>
         <p>
             <label for='rating'>Rating</label><br>
-            <select name='rating'>
+            <select name='rating' class="form-control">
                 <option value='five'>Five Stars</option>
                 <option value='four'>Four Stars</option>
                 <option value='three'>Three Stars</option>
@@ -27,7 +27,7 @@
 
     <!-- BUTTON -->
     <p>
-        <button type='submit'>Save Charity Information</button>
+        <button class="btn btn-primary" type='submit'>Save Charity Information</button>
     </p>
 </form>
 {% endblock %}

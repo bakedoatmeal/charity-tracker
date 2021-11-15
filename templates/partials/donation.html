@@ -1,14 +1,14 @@
-<li>
-    <p>{% for charity in charities %}
+<div class='row mb-2'>
+    <div class='col-4'>{% for charity in charities %}
             {% if donation.charity|string() == charity._id|string() %}
                 <a href='/charities/{{charity._id}}'> {{ charity.name }}</a>
             {% endif %}
-        {% endfor %}</p>
+        {% endfor %}</div>
         
-    <span>{{ donation.amount }}</span>
-    <span>{{ donation.date }}</span>
-    <p><form method='POST' action='/users/donations/{{ donation._id }}'>
+    <div class='col-3'>{{ donation.amount }}</div>
+    <div class='col-3'>{{ donation.date }}</div>
+    <div class='col-2'><form method='POST' action='/users/donations/{{ donation._id }}'>
         <input type='hidden' value='{{ user._id }}' name='user_id'/>
         <button class='btn btn-primary' type='submit'>Delete</button>
-    </form></p>
-</li>
+    </form></div>
+</div>
