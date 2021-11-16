@@ -1,5 +1,5 @@
-<li>        
-    <span>{{ donation.amount }}</span>
-    <span>{{ donation.date }}</span>
-    <span>User name: {{ donation.username }}</span>
-</li>
+<div class='row mb-2 card-text ml-1'>    
+    <div class='col-4'>{{ donation.username }}</div>    
+    <div class='col-3'>${{ donation.amount }}</div>
+    <div class='col-3'>{{ donation.date }}</div>
+</div>

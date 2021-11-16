@@ -5,7 +5,7 @@
 <h1>{{ charity.name }}</h1>
 
 <section>
-    <h2>Rating</h2>
+    <h3>Rating</h3>
    <p>{{charity.rating}} stars</p> 
     <h2>Description</h2>
     <p>{{ charity.description }}</p>
@@ -18,17 +18,27 @@
 
 <p>
     <form method='POST' action='/charities/{{charity._id}}/delete'>
-        <button type='submit'>Delete Charity</button>
+        <button class="btn btn-primary" type='submit'>Delete Charity</button>
     </form>
 </p>
 
 <p><a href='/charities/{{charity._id}}/edit'>Edit</a></p>
 
-<h2>Donations Received for {{charity.name}}</h2>
-<ul>
+{% for totalAmount in total %}
+<h2>Total Donation Amount Received: ${{totalAmount.total_amount}}</h2>
+{% endfor %}
+
+<h2 class='mb-4 mt-4'>Donations Received for {{charity.name}}</h2>
+
+<div class="mb-4 mt-4 card text-white bg-primary" >
+    <div class='row mb-3 card-header'>
+        <div class='col-4'>Donator</div>
+        <div class='col-3'>Amount</div>
+        <div class='col-3'>Date</div>
+    </div>
     {% for donation in donations %}
         {% include 'partials/donation2.html' %}
     {% endfor %}
-</ul>
+</div>
 
 {% endblock %}

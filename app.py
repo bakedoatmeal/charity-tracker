@@ -57,20 +57,34 @@ def users_show(user_id):
     """Show a single user's information."""
     user = users.find_one({'_id': ObjectId(user_id)})
     user_donations = donations.find({'user_id': ObjectId(user_id)})
-    # TODO: Fix donation total aggregate
-    # total_donations = donations.aggregate([{"$match": {'user_id': ObjectId(user_id)}},{
-    #     "$group": { "_id":0, "total_amount": {"$sum": "$amount"}
+    
+    # calculates total donation $ that user has contributed
+    total_donations = donations.aggregate(
+        [{"$match": {'user_id': ObjectId(user_id)}},{
+        "$group": { "_id":0, "total_amount": {"$sum": "$amount"}
+        }
+        }])
+        
+    # total_donations = donations.aggregate([{"$group":
+    #     {"_id": "$user_id", 
+    #     "total": {"$sum": "$amount"}
     #     }
-    #     }])
+    # }])
     # for donation in total_donations: 
-    #     print(donation)    
-    return render_template('users_show.html', user = user, donations=user_donations, charities=list(charities.find()))
+    #     print(donation) 
+
+    return render_template('users_show.html', user = user, donations=user_donations, charities=list(charities.find()), total = total_donations)
 
 @app.route('/charities/<charity_id>')
 def charities_show(charity_id):
     charity = charities.find_one({'_id': ObjectId(charity_id)})
     charity_donations = donations.find({'charity': ObjectId(charity_id)})
-    return render_template('charities_show.html', charity = charity, donations=charity_donations)
+    total_donations = donations.aggregate(
+        [{"$match": {'charity': ObjectId(charity_id)}},{
+        "$group": { "_id":0, "total_amount": {"$sum": "$amount"}
+        }
+        }])
+    return render_template('charities_show.html', charity = charity, donations=charity_donations, total= total_donations)
 
 #TODO: Add update route for Users
 #TODO: Also, can make sub templates for html files
@@ -109,7 +123,7 @@ def donations_new():
     """Submit a new donation"""
     donation = {
         'charity': ObjectId(request.form.get('charity')),
-        'amount': request.form.get('amount'),
+        'amount': int(request.form.get('amount')),
         'date': request.form.get('date'), 
         'user_id': ObjectId(request.form.get('user_id')),
         'username': request.form.get('username')
