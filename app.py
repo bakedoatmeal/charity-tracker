@@ -147,7 +147,3 @@ def donations_delete(donation_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-# TODO: Relate charities to donations 
-# TODO: CRUD Charities? 
-# TODO: Figure out UX path
