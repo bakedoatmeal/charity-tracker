@@ -52,7 +52,7 @@ def charities_submit():
     """Insert a new charity"""
     charity = {
         'name': request.form.get('name'),
-        'rating': request.form.get('rating'),
+        'rating': int(request.form.get('rating')),
         'description': request.form.get('description'),
         'projects': []
     }
@@ -105,7 +105,7 @@ def charities_edit(charity_id):
 def charities_update(charity_id):
     updated_charity = {
         'name': request.form.get('name'),
-        'rating': request.form.get('rating'),
+        'rating': int(request.form.get('rating')),
         'description': request.form.get('description'),
         'projects': []
     }

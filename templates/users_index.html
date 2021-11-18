@@ -22,6 +22,11 @@
         
         <div class="card border-dark mb-4 mr-4" style="max-width: 20rem;">
             <h2 class='card-header'><a href='/charities/{{charity._id}}' style="color:white;">{{charity.name}}</a></h2>
+            <div class='ml-3'>
+            {% for star in range(charity.rating) %}
+            <span>*</span>
+            {% endfor %}
+            </div>
             <div class="card-body">
                 <p class="card-text">
                         {{charity.description}}
